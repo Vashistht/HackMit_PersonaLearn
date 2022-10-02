@@ -108,10 +108,27 @@ function PLSliderTicker() {
     const currentValue = +sliderElmt.value
     if (currentValue === 50) {
         clearInterval(PLSliderUpdaterInterval);
+        recordComprehensionPoint()
         return;
     }
     const delta = currentValue < 50 ? 1 : -1
     sliderElmt.value = currentValue + delta
+}
+
+function recordComprehensionPoint() {
+    // Record the datapoint
+    const sliderElmt = document.getElementById("pl-slider-elmt")
+    const sliderValue = +sliderElmt.value
+    const comprehension = (sliderValue - 50) / 50
+
+    const videoElement = getPageSpecificVideoElement()
+    if (videoElement === null) throw new Error('Could not find video element on this site.')
+    const timestamp = videoElement.currentTime
+
+    comprehensionPoints.push({
+        comprehension,
+        timestamp,
+    })
 }
 
 /**
@@ -124,21 +141,10 @@ function handlePLSliderChange(event) {
     
     // Start counting down to start the next interval
     PLSliderTimeout = setTimeout(() => {
-        PLSliderUpdaterInterval = setInterval(PLSliderTicker, 50)
+        PLSliderUpdaterInterval = setInterval(PLSliderTicker, 1000 * 15 / 50) // reset to neutral after 15 seconds
     }, 1000)
     
-    // Record the datapoint
-    const sliderValue = +event.target.value
-    const comprehension = (sliderValue - 50) / 50
-
-    const videoElement = getPageSpecificVideoElement()
-    if (videoElement === null) throw new Error('Could not find video element on this site.')
-    const timestamp = videoElement.currentTime
-
-    comprehensionPoints.push({
-        comprehension,
-        timestamp,
-    })
+    recordComprehensionPoint()
 }
 
 /**

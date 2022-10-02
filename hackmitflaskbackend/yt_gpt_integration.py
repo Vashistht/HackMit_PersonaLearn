@@ -133,5 +133,5 @@ class YtRec:
     def final_dict(self):
         df_final = self.final_df()
         df_final = df_final.drop(columns = ['custom_score','views'])
-        dict_final = df_final.to_dict('dict')
+        dict_final = df_final.to_dict('records')
         return dict_final

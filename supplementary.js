@@ -59,6 +59,7 @@ function makeRelatedMaterialElement(relatedMaterial) {
   const linkElmt = document.createElement('a');
   linkElmt.className = 'material-link';
   linkElmt.href = url;
+  linkElmt.target = '_blank';
   linkElmt.appendChild(containerElmt);
 
   return linkElmt;

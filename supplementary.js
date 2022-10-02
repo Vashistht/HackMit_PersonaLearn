@@ -1,28 +1,22 @@
-onDocumentReady(() => {
+const BACKEND_URL = 'https://personalearn.herokuapp.com';
+
+onDocumentReady(async () => {
   const queryParameters = window.location.search.split('?')[1];
   const urlParameters = new URLSearchParams(queryParameters);
 
   const encodedComprehensionData = urlParameters.get('data');
   const comprehensionData = JSON.parse(decodeURIComponent(encodedComprehensionData));
 
-  // TODO: Fetch related materials from API
+  const response = await fetch(`${BACKEND_URL}/parameter`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(comprehensionData),
+  });
 
-  setTimeout(() => {
-    displayRelatedMaterials([
-      {
-        title: 'How to make a sandwich',
-        thumbnail: 'https://i.ytimg.com/vi/8ZtInClXe1Q/maxresdefault.jpg',
-        url: 'https://www.youtube.com/watch?v=8ZtInClXe1Q',
-        topics: ['sandwiches', 'cooking'],
-      },
-      {
-        title: 'Another video',
-        thumbnail: 'https://i.ytimg.com/vi/8ZtInClXe1Q/maxresdefault.jpg',
-        url: 'https://www.youtube.com/watch?v=8ZtInClXe1Q',
-        topics: ['sandwiches', 'cooking'],
-      }
-    ])
-  }, 1000)
+  const relatedMaterials = await response.json();
+  displayRelatedMaterials(relatedMaterials);
 });
 
 /**

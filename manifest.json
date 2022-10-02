@@ -3,7 +3,10 @@
     "version": "0.1.0",
     "description": "A personalized education recommendation platform.",
     "permissions": ["storage", "tabs"],
-    "host_permissions": ["https://*.youtube.com/*"],
+    "host_permissions": [
+      "https://*.youtube.com/*",
+      "https://personalearn.herokuapp.com/*"
+    ],
     "background": {
       "service_worker": "background.js"
     },

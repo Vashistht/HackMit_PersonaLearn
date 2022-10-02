@@ -13,17 +13,7 @@
  * }
  */
 
-let currentVideo = "";
 let comprehensionPoints = [];
-
-chrome.runtime.onMessage.addListener((obj) => {
-    const { type, videoId } = obj;
-
-    if (type === "NEW") {
-        currentVideo = videoId;
-        newVideoLoaded();
-    }
-});
 
 function appendComprehensionSlider() {
     // Comprehension slider input
@@ -82,11 +72,7 @@ function newVideoLoaded () {
 }
 
 // Wait for the webpage to stop loading
-if (document.readyState !== 'loading') {
-newVideoLoaded();
-} else {
-document.addEventListener('DOMContentLoaded', newVideoLoaded);
-}
+onDocumentReady(newVideoLoaded);
 
 // ==============================
 // > Video Helper Methods
@@ -183,3 +169,17 @@ function handlePLSliderKeyDown(event) {
         sliderElmt.value = currentValue - 10
     }
 }
+
+// ==============================
+// > Popup Communication
+// ==============================
+
+onDocumentReady(() => {
+    chrome.runtime.onMessage.addListener(
+        function(request, _sender, sendResponse) {
+            if (request.type === "get-comprehension-points") {
+                sendResponse(comprehensionPoints);
+            }
+        }
+    );
+})

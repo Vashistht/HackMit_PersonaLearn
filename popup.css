@@ -15,7 +15,7 @@
   margin: 0;
 }
 
-.submit-data {
+#submit-data {
   font-size: 16px;
   font-weight: medium;
   padding: 12px;
@@ -29,7 +29,7 @@
   transition: opacity 0.1s;
 }
 
-.submit-data:hover {
+#submit-data:hover {
   opacity: 0.8;
 }
 

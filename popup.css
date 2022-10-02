@@ -1,10 +1,38 @@
+.background {
+  background: rgb(240, 240, 240);
+}
+
 .container {
   width: 280px;
-  color: #314d3e;
+  padding: 8px;
+  text-align: center;
 }
 
 .title {
-  font-size: 14px;
+  font-size: 24px;
   font-weight: bold;
-  padding: 8px;
+  padding: 8px 0 0;
+  margin: 0;
+}
+
+.submit-data {
+  font-size: 16px;
+  padding: 12px;
+  margin: 8px 0 0;
+  color: rgb(37, 56, 63);
+  background: rgb(135, 206, 235);
+  outline: none;
+  border: 1px solid rgb(96, 147, 167);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.1s;
+}
+
+.submit-data:hover {
+  opacity: 0.8;
+}
+
+.hackmit {
+  color: gray;
+  margin-top: 0;
 }

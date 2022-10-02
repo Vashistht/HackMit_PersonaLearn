@@ -9,7 +9,7 @@ app = Flask(__name__)
 def index():
     return "Hello world!"
 
-@app.route("/parameter")
+@app.route("/parameter", methods=["POST"])
 # input data
 # [11.59, 120, 150 , 180 , 240 , 500]
 # all data is in seconds  

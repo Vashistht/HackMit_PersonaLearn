@@ -5,6 +5,10 @@ from flask import request,jsonify
 
 app = Flask(__name__)
 
+@app.route("/")
+def index():
+    return "Hello world!"
+
 @app.route("/parameter")
 # input data
 # [11.59, 120, 150 , 180 , 240 , 500]

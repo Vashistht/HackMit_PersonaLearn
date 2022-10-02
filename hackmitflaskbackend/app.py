@@ -2,6 +2,7 @@ from tracemalloc import start
 from flask import Flask 
 from youtube_transcript_api import YouTubeTranscriptApi
 from flask import request,jsonify
+from yt_gpt_integration import YtRec
 
 app = Flask(__name__)
 
@@ -63,11 +64,13 @@ def transcript_data():
         if(text not in global_text):
             global_text.append(text)
 
-        
-    print(global_text)
-    #print(obj)
+    supplemental_materials = []
+    for excerpt in global_text:
+        yt_rec = YtRec(excerpt)
+        yt_dict = yt_rec.final_dict()
+        supplemental_materials.append(yt_dict)
 
-    return "Hello World!"
+    return supplemental_materials
 
 if __name__ == "__main__":
     app.run()

@@ -3,13 +3,7 @@ import os
 import openai
 from dotenv import load_dotenv
 
-# imports yt
-import os
-import openai
-from dotenv import load_dotenv
-
 #general
-import json
 load_dotenv()
 
 class YtRec:

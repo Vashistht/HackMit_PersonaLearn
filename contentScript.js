@@ -2,7 +2,19 @@
 // > Video Load Logic
 // ==============================
 
+/**
+ * Information submitted to the server:
+ * {
+ *   videoId: string,
+ *   comprehensionPoints: Array<{
+ *     comprehension: number, // -1 to 1 with 0 being neutral
+ *     timestamp: number      // in seconds
+ *   }>
+ * }
+ */
+
 let currentVideo = "";
+let comprehensionPoints = [];
 
 chrome.runtime.onMessage.addListener((obj) => {
     const { type, videoId } = obj;
@@ -77,6 +89,24 @@ document.addEventListener('DOMContentLoaded', newVideoLoaded);
 }
 
 // ==============================
+// > Video Helper Methods
+// ==============================
+
+const domainToQuerySelectorMap = {
+    'youtube.com': '#movie_player > div.html5-video-container > video'
+}
+
+function getPageSpecificVideoElement() {
+    for (const domain in domainToQuerySelectorMap) {
+        if (window.location.href.includes(domain)) {
+            return document.querySelector(domainToQuerySelectorMap[domain]);
+        }
+    }
+
+    return null;
+}
+
+// ==============================
 // > Comprehension Slider Logic
 // ==============================
 
@@ -101,13 +131,28 @@ function PLSliderTicker() {
 /**
  * Handle the PLSlider change event
  */
-function handlePLSliderChange() {
+function handlePLSliderChange(event) {
+    // Stop existing intervals
     clearInterval(PLSliderUpdaterInterval)
     clearTimeout(PLSliderTimeout)
     
+    // Start counting down to start the next interval
     PLSliderTimeout = setTimeout(() => {
         PLSliderUpdaterInterval = setInterval(PLSliderTicker, 50)
     }, 1000)
+    
+    // Record the datapoint
+    const sliderValue = +event.target.value
+    const comprehension = (sliderValue - 50) / 50
+
+    const videoElement = getPageSpecificVideoElement()
+    if (videoElement === null) throw new Error('Could not find video element on this site.')
+    const timestamp = videoElement.currentTime
+
+    comprehensionPoints.push({
+        comprehension,
+        timestamp,
+    })
 }
 
 /**

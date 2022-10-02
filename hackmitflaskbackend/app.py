@@ -68,9 +68,25 @@ def transcript_data():
     for excerpt in global_text:
         yt_rec = YtRec(excerpt)
         yt_dicts = yt_rec.final_dict()
+        transform(yt_dicts)
         supplemental_materials.extend(yt_dicts)
 
     return supplemental_materials
 
+def remove_newline(word): 
+    words = []
+    while("\n" in word):
+        pos = word.find("\n")
+        temp, word = word[:pos], word[pos+1:]
+        words.append(temp)
+
+    words.append(word)
+
+    return words
+
+def transform(ob):
+    for i in range(len(ob)):
+        ob[i]["topics"] = "".join(remove_newline(ob[i]["topics"])).split(" ")
+
 if __name__ == "__main__":
-    app.run()
+    app.run(port=3000)

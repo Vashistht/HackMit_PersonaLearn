@@ -1,6 +1,8 @@
 # imports gpt
 import os
 import openai
+import pandas as pd
+from googleapiclient.discovery import build
 from dotenv import load_dotenv
 
 #general
@@ -69,13 +71,13 @@ class YtRec:
 
     def get_thumbnail(self, item):
         video_id = item['id']['videoId']
-        video_thumbnail = "https://www.youtube.com/watch?v=" + video_id + "/default.jpg"
-        return video_thumbnail
+        video_url = "https://img.youtube.com/vi/" + video_id + "/default.jpg"
+        return video_url
 
     def get_video_url(self, item):
         video_id = item['id']['videoId']
-        video_url = "https://img.youtube.com/vi/" + video_id
-        return video_url
+        video_thumbnail = "https://www.youtube.com/watch?v=" + video_id
+        return video_thumbnail
 
     def get_viewcount(self, item, youtube):
         video_id = item['id']['videoId']

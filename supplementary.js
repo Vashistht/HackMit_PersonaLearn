@@ -1,4 +1,4 @@
-const BACKEND_URL = 'https://personalearn.herokuapp.com';
+const BACKEND_URL = 'http://localhost:3000';
 
 onDocumentReady(async () => {
   const queryParameters = window.location.search.split('?')[1];
@@ -16,6 +16,7 @@ onDocumentReady(async () => {
   });
 
   const relatedMaterials = await response.json();
+  console.log(relatedMaterials)
   displayRelatedMaterials(relatedMaterials);
 });
 
@@ -35,11 +36,11 @@ function makeRelatedMaterialElement(relatedMaterial) {
 
   const titleElmt = document.createElement('h3');
   titleElmt.className = 'material-title';
-  titleElmt.textContent = title;
+  titleElmt.innerHTML = title;
 
   const topicsElmt = document.createElement('p');
   topicsElmt.className = 'material-topics';
-  topicsElmt.textContent = 'Topics: ' + topics.join(', ');
+  // topicsElmt.textContent = 'Topics: ' + topics.join(', ');
 
   const materialDetails = document.createElement('div');
   materialDetails.className = 'material-details';

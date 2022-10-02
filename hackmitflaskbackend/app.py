@@ -67,8 +67,8 @@ def transcript_data():
     supplemental_materials = []
     for excerpt in global_text:
         yt_rec = YtRec(excerpt)
-        yt_dict = yt_rec.final_dict()
-        supplemental_materials.append(yt_dict)
+        yt_dicts = yt_rec.final_dict()
+        supplemental_materials.extend(yt_dicts)
 
     return supplemental_materials
 

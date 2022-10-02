@@ -40,7 +40,7 @@ function makeRelatedMaterialElement(relatedMaterial) {
 
   const topicsElmt = document.createElement('p');
   topicsElmt.className = 'material-topics';
-  // topicsElmt.textContent = 'Topics: ' + topics.join(', ');
+  topicsElmt.textContent = 'Topics: ' + topics.join(', ');
 
   const materialDetails = document.createElement('div');
   materialDetails.className = 'material-details';

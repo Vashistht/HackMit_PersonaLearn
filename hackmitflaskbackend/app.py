@@ -18,7 +18,6 @@ def index():
 
 def transcript_data():
     data = request.json
-    print(data)
     link = data['videoId']
     comprehensionPoints = data['comprehensionPoints']
     obj = YouTubeTranscriptApi.get_transcript(link)
@@ -73,20 +72,9 @@ def transcript_data():
 
     return supplemental_materials
 
-def remove_newline(word): 
-    words = []
-    while("\n" in word):
-        pos = word.find("\n")
-        temp, word = word[:pos], word[pos+1:]
-        words.append(temp)
-
-    words.append(word)
-
-    return words
-
-def transform(ob):
-    for i in range(len(ob)):
-        ob[i]["topics"] = "".join(remove_newline(ob[i]["topics"])).split(" ")
+def transform(dict_list):
+    for obj in dict_list:
+        obj["topics"] = [keyword.strip() for keyword in obj["topics"].replace("\n", "").split("The topic is") if keyword.strip() != ""]
 
 if __name__ == "__main__":
     app.run(port=3000)

@@ -7,7 +7,7 @@ onDocumentReady(async () => {
   const encodedComprehensionData = urlParameters.get('data');
   const comprehensionData = JSON.parse(decodeURIComponent(encodedComprehensionData));
 
-  const response = await fetch(`${BACKEND_URL}/parameter`, {
+  const response = await fetch(`${BACKEND_URL}/recommend`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
